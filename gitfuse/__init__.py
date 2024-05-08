@@ -122,7 +122,10 @@ class GitFS(Operations, LoggingMixIn):
          '/remotes/origin/attr-export',
          '/remotes/origin/HEAD']
         """
-        return [r for r in self.refs if r.startswith(path)]
+        if path == "/":
+            return self.refs
+        path2 = path + "/"
+        return [r for r in self.refs if (r + "/").startswith(path2)]
 
     def get_path_children(self, path):
         """
